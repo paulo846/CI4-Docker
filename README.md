@@ -1,5 +1,5 @@
 # A melhor imagem docker para Codeigniter 4 em produção
-### **SEU PROJETO CI4 DO GIT DIRETO NO SEU CONTAINER** :tw-1f60d:
+### **SEU PROJETO CI4 DO GIT DIRETO NO SEU CONTAINER** 😍
 
 **Descrição Geral:**
 
