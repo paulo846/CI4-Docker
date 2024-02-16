@@ -71,6 +71,6 @@ Variáveis de ambiente relevantes (pode adicionar outras conforme necessário):
 ## Avisos
 - Certifique-se de ajustar as variáveis de ambiente conforme necessário.
 - Este contêiner é destinado principalmente a fins de desenvolvimento.
-- Licença: MIT (consulte o arquivo LICENSE).
+- Licença: GNU GPL (consulte o arquivo LICENSE).
 
 Sinta-se à vontade para ajustar conforme necessário!
