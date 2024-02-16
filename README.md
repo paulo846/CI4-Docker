@@ -1,62 +1,66 @@
-### Descrição incompleta, precisa ser atualizada 
-- Novas variáveis foram adicinadas
+**Descrição Geral:**
 
-## Imagem Docker para Ambiente de Produção do CodeIgniter 4
+Este é um contêiner Docker configurado para PHP 8.2 com Apache, projetado para aplicações baseadas no CodeIgniter 4 (CI4). Inclui diversas extensões e dependências essenciais para o desenvolvimento e execução de aplicações web. Além disso, há um script de inicialização que realiza a clonagem de um repositório Git específico ou utiliza um repositório padrão se a variável `CI4_GIT_REPO` não estiver definida.
 
-### Descrição Geral
-Esta imagem Docker é projetada para fornecer um ambiente de produção otimizado para a execução de aplicativos desenvolvidos com o framework CodeIgniter 4. Ela inclui o PHP 8.2 com Apache, juntamente com as dependências necessárias para o CodeIgniter 4.
+**Especificações:**
 
-### Especificações
-- **PHP 8.2 com Apache**: A imagem é baseada no PHP 8.2 com o servidor web Apache, proporcionando um ambiente robusto para a execução de aplicativos web.
-- **Dependências Instaladas**: O Dockerfile instala as seguintes dependências:
-  - Extensões PHP necessárias (`intl`, `pdo_mysql`, `zip`, `gd`)
-  - Composer para gerenciamento de dependências PHP
-  - Módulos do Apache (`mod_rewrite`)
-- **Configurações Adicionais**: Além da instalação das dependências, o Dockerfile realiza as seguintes configurações:
-  - Clona a aplicação CodeIgniter 4 a partir de um repositório Git fornecido através da variável de ambiente `CI4_GIT_REPO`.
-  - Define permissões adequadas para os arquivos da aplicação.
-  - Configura o mapeamento do domínio para a pasta `public` da aplicação.
-  - Atualiza o pacote do CodeIgniter 4 para garantir que a aplicação esteja na versão mais recente.
+- **Imagem Base:** `php:8.2-apache`
+- **Extensões PHP Instaladas:** `intl`, `pdo_mysql`, `zip`, `gd`, `mysqli`, `redis`
+- **Dependências Adicionadas:** `libicu-dev`, `libzip-dev`, `zip`, `unzip`, `git`, `libpng-dev`, `libgd-dev`, `libfreetype6-dev`, `libjpeg-dev`, `libmagickwand-dev`
+- **Ferramentas Adicionadas:** `Composer`
 
-### Utilização
-Para utilizar esta imagem Docker, você pode construir um contêiner com base no Dockerfile fornecido e fornecer as configurações necessárias através do `docker-compose.yaml` ou diretamente ao executar o contêiner.
+**Utilização:**
 
-Esta imagem é ideal para implantar aplicativos CodeIgniter 4 em ambientes de produção, proporcionando uma infraestrutura confiável e escalável para hospedar suas aplicações web.
+1. Clone este repositório.
+2. Construa a imagem do Docker usando o Dockerfile fornecido.
+3. Execute o contêiner com as variáveis de ambiente necessárias.
 
-# Variáveis de Ambiente Suportadas
+**Uso das Variáveis:**
 
-## Variáveis Relacionadas ao Aplicativo
+O script `docker-entrypoint.sh` é responsável por configurar e inicializar o ambiente. Ele verifica a existência da variável `CI4_GIT_REPO`. Se definida, o repositório é clonado; caso contrário, um repositório padrão é utilizado.
 
-- **CI_ENVIRONMENT**: Define o ambiente de execução do aplicativo, como "development", "production" ou "testing".
+Variáveis de ambiente relevantes (pode adicionar outras conforme necessário):
 
-- **app_baseURL**: Define a URL base do aplicativo.
+- `CI_ENVIRONMENT`: Ambiente do CodeIgniter (desenvolvimento, produção, etc.).
+- `app.baseURL`: URL base da aplicação.
+- `database_default_*`: Configurações do banco de dados.
+- `session_*`: Configurações de sessão.
+- `encryption_*`: Configurações de criptografia.
+- `AWS_*`: Credenciais e configurações para integração com a AWS.
 
-- **app_forceGlobalSecureRequests**: Define se todas as solicitações devem ser forçadas para HTTPS.
+          - CI4_GIT_REPO=    #https://github.com/codeigniter4/CodeIgniter4.git
+          - CI_ENVIRONMENT=  #development #production #testing
+          - app_baseURL=
+          - app_forceGlobalSecureRequests=
+          - database_default_hostname=
+          - database_default_database=
+          - database_default_username=
+          - database_default_password=
+          - database_default_DBDriver=
+          - database_default_DBPrefix=
+          - database_default_port=3306
+          - session_driver=
+          - session_cookieName=
+          - session_expiration=
+          - session_savePath=
+          - session_matchIP=
+          - session_timeToUpdate=
+          - session_regenerateDestroy=
+          - AWS_ACCESS_KEY_ID=
+          - AWS_SECRET_ACCESS_KEY=
+          - AWS_DEFAULT_REGION=
+          - AWS_ACCESS_KEY_ID_SES=
+          - AWS_SECRET_ACCESS_KEY_SES=
+          - AWS_DEFAULT_REGION_SES=
+          - AWS_BUCKET=
 
-- **app_CSPEnabled**: Ativa ou desativa a Política de Segurança de Conteúdo (CSP).
+**Observações:**
 
-## Variáveis Relacionadas ao Banco de Dados
+- O Composer é instalado, e as dependências são atualizadas durante a construção.
+- O Apache é configurado para usar o diretório `/var/www/html/public` como DocumentRoot.
+- O script de entrada (`docker-entrypoint.sh`) automatiza tarefas comuns, como migrações do CodeIgniter e ajustes de permissões.
 
-- **database_default_hostname**: O hostname do banco de dados padrão.
+**Instruções de Execução local:**
 
-- **database_default_database**: O nome do banco de dados padrão.
-
-- **database_default_username**: O nome de usuário do banco de dados padrão.
-
-- **database_default_password**: A senha do banco de dados padrão.
-
-- **database_default_DBDriver**: O driver de banco de dados padrão.
-
-- **database_default_DBPrefix**: O prefixo da tabela do banco de dados padrão.
-
-- **database_default_port**: A porta do banco de dados padrão.
-
-## Outras Variáveis
-
-- **logger_threshold**: Define o nível mínimo de log a ser registrado.
-
-- **curlrequest_shareOptions**: Define se as opções CURL devem ser compartilhadas.
-
-- **aws_access_key_id**: A ID da chave de acesso da AWS para autenticação.
-
-- **aws_secret_access_key**: A chave de acesso secreta da AWS para autenticação.
+    docker build -t nome-da-imagem .
+    docker run -e CI4_GIT_REPO=URL-do-seu-repositorio -p 8080:80 nome-da-imagem
