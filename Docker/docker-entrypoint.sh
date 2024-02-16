@@ -15,7 +15,7 @@ if [ -n "${CI4_GIT_REPO}" ]; then
     # rm -rf /var/www/tmp
 else
     echo "A variável CI4_GIT_REPO não está definida. Usando o valor padrão."
-    git clone https://github.com/paulo846/estudoCI4.git /var/www/html && rm -f /var/www/html/.env || true
+    git clone https://github.com/codeigniter4/CodeIgniter4.git /var/www/html && rm -f /var/www/html/.env || true
 fi
 
 # Criar um diretório vazio para o Composer
