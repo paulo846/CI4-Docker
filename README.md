@@ -1,3 +1,6 @@
+### A melhor imagem docker para Codeigniter 4 em produção
+#### Seu projeto CI4 do git direto no seu container
+
 **Descrição Geral:**
 
 Este é um contêiner Docker configurado para PHP 8.2 com Apache, projetado para aplicações baseadas no CodeIgniter 4 (CI4). Inclui diversas extensões e dependências essenciais para o desenvolvimento e execução de aplicações web. Além disso, há um script de inicialização que realiza a clonagem de um repositório Git específico ou utiliza um repositório padrão se a variável `CI4_GIT_REPO` não estiver definida.
@@ -64,3 +67,10 @@ Variáveis de ambiente relevantes (pode adicionar outras conforme necessário):
 
     docker build -t nome-da-imagem .
     docker run -e CI4_GIT_REPO=URL-do-seu-repositorio -p 8080:80 nome-da-imagem
+
+## Avisos
+- Certifique-se de ajustar as variáveis de ambiente conforme necessário.
+- Este contêiner é destinado principalmente a fins de desenvolvimento.
+- Licença: MIT (consulte o arquivo LICENSE).
+
+Sinta-se à vontade para ajustar conforme necessário!
