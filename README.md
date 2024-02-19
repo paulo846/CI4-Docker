@@ -3,6 +3,8 @@
 
 **Descrição Geral:**
 
+Link no docker hub: https://hub.docker.com/r/multideskio/ci4
+
 Este é um contêiner Docker configurado para PHP 8.2 com Apache, projetado para aplicações baseadas no CodeIgniter 4 (CI4). Inclui diversas extensões e dependências essenciais para o desenvolvimento e execução de aplicações web. Além disso, há um script de inicialização que realiza a clonagem de um repositório Git específico ou utiliza um repositório padrão se a variável `CI4_GIT_REPO` não estiver definida.
 
 **Especificações:**
