@@ -3,16 +3,8 @@ set -e
 
 # Verificar se CI4_GIT_REPO está definido; se não, usar o valor padrão
 if [ -n "${CI4_GIT_REPO}" ]; then
-    
     echo "Clonando repositório Git a partir de ${CI4_GIT_REPO}..."
     git clone ${CI4_GIT_REPO} /var/www/html && rm -f /var/www/html/.env || true
-
-    # Clonar o repositório em um diretório temporário
-    # git clone ${CI4_GIT_REPO} /var/www/tmp && rm -f /var/www/tmp/.env || true
-    # Copiar os arquivos para o diretório de trabalho
-    # cp -r /var/www/tmp/* /var/www/html/
-    # Remover o diretório temporário
-    # rm -rf /var/www/tmp
 else
     echo "A variável CI4_GIT_REPO não está definida. Usando o valor padrão."
     git clone https://github.com/codeigniter4/CodeIgniter4.git /var/www/html && rm -f /var/www/html/.env || true
@@ -25,13 +17,27 @@ mkdir -p /var/www/composer
 echo "Executando composer update em /var/www/html..."
 composer update --working-dir=/var/www/html
 
-echo "Executando migrations..."
-#só pra frente, qualquer roolback deve ser feito direto no container
-php spark migrate --working-dir=/var/www/html
+# verifica se é CI4
+if [ -n "${TYPE}" ]; then
 
-# Dar permissões de escrita ao diretório "writable"
-echo "Dando permissões de escrita ao diretório /var/www/html/writable..."
-chown -R www-data:www-data /var/www/html/writable
+    echo "Intalação php comum, mas é preciso ter uma instalação de app com a pasta public..."
+
+    chown -R www-data:www-data /var/www/html/
+
+else
+    
+    echo "Executando migrations..."
+
+    #só pra frente, qualquer roolback deve ser feito direto no container
+    php spark migrate --working-dir=/var/www/html
+    
+    # Dar permissões de escrita ao diretório "writable"
+    echo "Dando permissões de escrita ao diretório /var/www/html/writable..."
+    chown -R www-data:www-data /var/www/html/writable
+fi
+
+
+
 
 echo "Verificando variaveis..."
 
