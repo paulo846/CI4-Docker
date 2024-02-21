@@ -8,6 +8,7 @@ services:
     environment:
       - CI4_GIT_REPO=    #https://github.com/codeigniter4/CodeIgniter4.git
       - CI_ENVIRONMENT=  #development #production #testing
+      #- MIGRATIONS=true  FALSE = PULA AS MIGRATIONS
       - app_baseURL=
       - app_forceGlobalSecureRequests=
       - database_default_hostname=

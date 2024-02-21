@@ -18,14 +18,8 @@ echo "Executando composer update em /var/www/html..."
 composer update --working-dir=/var/www/html
 
 # verifica se é CI4
-if [ -n "${TYPE}" ]; then
+if [ -n "${MIGRATIONS}" ]; then
 
-    echo "Intalação php comum, mas é preciso ter uma instalação de app com a pasta public..."
-
-    chown -R www-data:www-data /var/www/html/
-
-else
-    
     echo "Executando migrations..."
 
     #só pra frente, qualquer roolback deve ser feito direto no container
@@ -34,6 +28,13 @@ else
     # Dar permissões de escrita ao diretório "writable"
     echo "Dando permissões de escrita ao diretório /var/www/html/writable..."
     chown -R www-data:www-data /var/www/html/writable
+
+else
+    
+    echo "Intalação php comum, mas é preciso ter uma instalação de app com a pasta public..."
+
+    chown -R www-data:www-data /var/www/html/
+    
 fi
 
 
